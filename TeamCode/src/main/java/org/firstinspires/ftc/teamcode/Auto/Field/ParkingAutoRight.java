@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Robot.Bot;
 import org.firstinspires.ftc.teamcode.Robot.Variables;
 
 
-@Autonomous(name= "Right Parking Auto")
+@Autonomous(name= "Right Parking Auto!!!!!")
 public class ParkingAutoRight extends LinearOpMode {
 
     Bot robot = new Bot();
@@ -89,11 +89,11 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
         sleep(550);
-        Bot.strafeDrive(-55,.5, this);
+        Bot.strafeDrive(-65,.7, this);
         sleep(5);
-        Bot.driveStraight(125,.5, this);
+        Bot.driveStraight(123,.7, this);
         sleep(5);
-        Bot.strafeDrive(37,.3,this);
+        Bot.strafeDrive(37,.5,this);
     }
 
     void ACTII(){
@@ -102,12 +102,12 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
-        Bot.driveStraight(16, .3, this);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall + 200);
-        sleep(75);
+        Bot.driveStraight(13, .3, this);
+        Bot.Lift.setTargetPosition(var.Lvl_Tall + 400);
+        sleep(10);
         //Bot.strafeDrive(3,.5,this);
         Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(2000);
+        sleep(1250);
         Bot.driveStraight(-20, .3, this);
         sleep(1);
         Bot.Claw.setTargetPosition(var.claw_cone);
@@ -118,6 +118,19 @@ public class ParkingAutoRight extends LinearOpMode {
     }
 
     void ACTIII(){
+        Bot.gyroTurn(.7, 250, this);
+        sleep(5);
+        Bot.driveStraight(115,.6,this);
+        sleep(5);
+        Bot.driveStraight(10,.9,this);
+        sleep(5);
+        Bot.Lift.setTargetPosition(var.Lvl_Short + 500);
+        sleep(550);
+        Bot.Claw.setTargetPosition(var.claw_cone);
+        sleep(55);
+    }
+
+    void ACTIV(){
         switch (pos) {
             case POS1:
                 Bot.strafeDrive(-35,.9,this);

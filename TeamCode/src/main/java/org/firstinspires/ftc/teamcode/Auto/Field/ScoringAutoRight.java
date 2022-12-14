@@ -31,14 +31,10 @@ public class ScoringAutoRight extends LinearOpMode {
 
         waitForStart();
 
-        // camera decision
+        ObjectDetector.POSITIONS position = detector.getDecision(this);
+        pos = position;
+        telemetry.addData("position ", detector.getDecision(this));
 
-
-
-
-        //robot.strafeDrive(-40, 0, 0.7, this);
-        //robot.strafeDrive(0,70, 0.7, this);
-       // robot.strafeDrive(-39, 0, 0.7, this);
 
 
         ACTI();
@@ -47,98 +43,77 @@ public class ScoringAutoRight extends LinearOpMode {
 
         //ACTIII();
 
+        //ACTIV();
 
-//
-//
-    //    // getting into position to drop cone
-    //    //robot.strafeDrive(0, 4, 0.7, this);
-    //    Bot.driveStraight(.7, 4,4,4,4,this);
-//
-    //    Bot.Claw.setTargetPosition(var.claw_open);
-    //    //robot.strafeDrive(0, -4, 0.7, this);
-    //    Bot.driveStraight(.7, -4,-4,-4,-4,this);
-    //    Bot.Lift.setTargetPosition(var.Lvl_Ground);
-    //    Bot.Claw.setTargetPosition(var.claw_zero);
-    //    //robot.strafeDrive(30, 0, 0.7, this);
-    //    //robot.strafeDrive(0, 65, 0.7, this);
-    //    Bot.strafeDrive(30,.7, this);
-    //    Bot.driveStraight(.7, 65,65,65,65,this);
-//
-//
-    //    // make the decision
-    //    switch (position) {
-    //        case POS1:
-    //         break;
-    //         case POS2:
-    //             //robot.strafeDrive(55, 0, 0.7, this);
-    //             Bot.strafeDrive(55,.7, this);
-//
-    //             break;
-    //             case POS3:
-    //                 //robot.strafeDrive(112, 0, 0.7, this);
-    //                 Bot.strafeDrive(112,.7, this);
-//
-    //    }
+        //ACTV();
+
+
     }
 
     void ACTI(){
         Bot.Claw.setTargetPosition(var.claw_cone);
         sleep(1);
+        Bot.driveStraight(20,.8,this);
+        sleep(1);
+        Bot.gyroTurn(.7,90,this);
+        sleep(1);
+        Bot.strafeDrive(-5,.8,this);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
         sleep(55);
-        Bot.driveStraight(65,.5,this);
+        Bot.driveStraight(-70,.5,this);
         sleep(5);
-        Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(550);
-        Bot.driveStraight(5,.9,this);
-        sleep(5);
-        Bot.driveStraight(-5,.9,this);
-        sleep(5);
+
     }
 
     void ACTII(){
         Bot.strafeDrive(-115, .6, this);
         sleep(5);
-        Bot.driveStraight(5,.9,this);
-        sleep(5);
-        Bot.Lift.setTargetPosition(var.Lvl_Short + 400);
+        Bot.Lift.setTargetPosition(var.Lvl_Short + 500);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         sleep(550);
         Bot.Claw.setTargetPosition(var.claw_cone);
         sleep(55);
+        Bot.driveStraight(5,.9,this);
+        sleep(5);
     }
 
     void ACTIII(){
-        Bot.driveStraight(125, .5, this);
+        Bot.driveStraight(-75, .5, this);
         sleep(5);
-        Bot.strafeDrive(-22, .8, this);
-        sleep(5);
+        Bot.gyroTurn(1,90,this);
+        sleep(1);
     }
 
     void ACTIV(){
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         sleep(-var.Lvl_Tall);
-        Bot.driveStraight(16, .3, this);
+        Bot.driveStraight(13, .3, this);
         Bot.Lift.setTargetPosition(var.Lvl_Tall + 200);
-        sleep(75);
+        sleep(100);
         Bot.strafeDrive(3,.5,this);
         Bot.Claw.setTargetPosition(var.claw_zero);
         sleep(2000);
         Bot.driveStraight(-20, .3, this);
         sleep(1);
         Bot.Claw.setTargetPosition(var.claw_cone);
-        sleep(600);
+        sleep(750);
         Bot.Lift.setTargetPosition(var.Lvl_Ground);
         sleep(-var.Lvl_Tall);
         Bot.Lift.setPower(0);
     }
 
     void ACTV(){
-        Bot.strafeDrive(137, .5, this);
-        sleep(5);
-        Bot.driveStraight(125, .6, this);
-        sleep(5);
+        switch (pos) {
+            case POS1:
+                Bot.strafeDrive(-35,.9,this);
+                break;
+            case POS2:
+                Bot.strafeDrive(30,.9,this);
+                break;
+            case POS3:
+                Bot.strafeDrive(95,.9,this);
+        }
     }
 }

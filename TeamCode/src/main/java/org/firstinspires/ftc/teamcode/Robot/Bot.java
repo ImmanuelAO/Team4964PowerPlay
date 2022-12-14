@@ -18,8 +18,8 @@ public class Bot {
 
     public static ModernRoboticsI2cGyro Gyro;
 
-    static final double HEADING_THRESHOLD = 1;      // As tight as we can make it with an integer gyro
-    static final double P_TURN_COEFF = 0.1;     // Larger is more responsive, but also less stable
+    static final double HEADING_THRESHOLD = 178;      // As tight as we can make it with an integer gyro
+    static final double P_TURN_COEFF = .05;     // Larger is more responsive, but also less stable
     static final double P_DRIVE_COEFF = 0.07;     // Larger is more responsive, but also less stable
 
     public static double DRIVE_SPEED = 0.4;
@@ -43,6 +43,7 @@ public class Bot {
         bRightDT  = hwMap.get(DcMotor.class, "BackR");
         Lift      = hwMap.get(DcMotor.class, "lift"    );
         Claw      = hwMap.get(DcMotor.class, "claw"    );
+        Gyro      = hwMap.get(ModernRoboticsI2cGyro.class , "gyro");
 
         tLeftDT.setDirection(DcMotor.Direction.FORWARD);
         tLeftDT.setDirection(DcMotor.Direction.FORWARD);
@@ -58,6 +59,7 @@ public class Bot {
         bLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Gyro.calibrate();
 
         tRightDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         tLeftDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -206,6 +208,74 @@ public class Bot {
 
         }
 
+    }
+
+    public static void gyroTurn(double speed, double angle, LinearOpMode opmode) {
+
+        // keep looping while we are still active, and not on heading.
+        while (opmode.opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF, opmode)) {
+            // Update telemetry & Allow time for other processes to run.
+            opmode.telemetry.update();
+        }
+    }
+
+    static boolean onHeading(double speed, double angle, double PCoeff, LinearOpMode opmode) {
+        double   error;
+        double   steer;
+        boolean  onTarget = false;
+        double leftSpeed;
+        double rightSpeed;
+
+        // determine turn power based on +/- error
+        error = getError(-angle);
+
+        if (Math.abs(error) >= HEADING_THRESHOLD) {
+            steer = 0.0;
+            leftSpeed  = 0.0;
+            rightSpeed = 0.0;
+            onTarget = true;
+        }
+        else {
+            steer = getSteer(error, PCoeff);
+
+            leftSpeed  = speed * steer;
+            rightSpeed   = -leftSpeed;
+        }
+
+        tLeftDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bLeftDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tRightDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bRightDT.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Send desired speeds to motors.
+        tLeftDT.setPower(leftSpeed);
+        tRightDT.setPower(leftSpeed);
+        tRightDT.setPower(rightSpeed);
+        bRightDT.setPower(rightSpeed);
+
+        // Display it for the driver.
+        opmode.telemetry.addData("Target", "%5.2f", angle);
+        opmode.telemetry.addData("Err/St", "%5.2f/%5.2f", error, steer);
+        opmode.telemetry.addData("Speed ", "%5.2f:%5.2f", leftSpeed, rightSpeed);
+        opmode.telemetry.addData("current Angle", Gyro.getHeading());
+        opmode.telemetry.addData("current Angle Z", Gyro.getIntegratedZValue());
+
+        return onTarget;
+    }
+
+    public static double getError(double targetAngle) {
+
+        double robotError;
+
+        // calculate error in -179 to +180 range  (
+        robotError = targetAngle - Gyro.getHeading();
+        while (robotError > 180) robotError -= 360;
+        while (robotError <= -180) robotError += 360;
+        return -robotError;
+    }
+
+    public static double getSteer(double err, double PCoeff) {
+        return Range.clip(err * PCoeff, -DRIVE_SPEED, 1);
     }
 
     public static void gyroDrive(double speed,
@@ -357,20 +427,7 @@ public class Bot {
 
     }
 
-    public static double getError(double targetAngle) {
 
-        double robotError;
-
-        // calculate error in -179 to +180 range  (
-        robotError = targetAngle - Gyro.getHeading();
-        while (robotError > 180) robotError -= 360;
-        while (robotError <= -180) robotError += 360;
-        return -robotError;
-    }
-
-    public static double getSteer(double err, double PCoeff) {
-        return Range.clip(err * PCoeff, -DRIVE_SPEED, 1);
-    }
 
 
 }
