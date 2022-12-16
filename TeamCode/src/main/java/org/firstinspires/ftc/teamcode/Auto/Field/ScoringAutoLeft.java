@@ -67,7 +67,7 @@ public class ScoringAutoLeft extends LinearOpMode {
         sleep(5);
         Bot.driveStraight(5,.9,this);
         sleep(5);
-        Bot.Lift.setTargetPosition(var.Lvl_Short + 500);
+        Bot.Lift.setTargetPosition(var.Lvl_Short + 100);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         sleep(550);

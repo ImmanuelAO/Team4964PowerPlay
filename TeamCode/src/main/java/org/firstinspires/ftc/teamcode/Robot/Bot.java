@@ -19,10 +19,10 @@ public class Bot {
     public static ModernRoboticsI2cGyro Gyro;
 
     static final double HEADING_THRESHOLD = 178;      // As tight as we can make it with an integer gyro
-    static final double P_TURN_COEFF = .05;     // Larger is more responsive, but also less stable
+    static final double P_TURN_COEFF = 1;     // Larger is more responsive, but also less stable
     static final double P_DRIVE_COEFF = 0.07;     // Larger is more responsive, but also less stable
 
-    public static double DRIVE_SPEED = 0.4;
+    public static double DRIVE_SPEED = .7;
     public static double TURN_SPEED = 0.4;
     public static double amountError = 2;
 
@@ -143,7 +143,7 @@ public class Bot {
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
 
-                if (error >= actError - .5 && error <= actError + .5) {
+                if ( error >= actError - .5 && error <= actError + .5) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
@@ -196,7 +196,7 @@ public class Bot {
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
 
-                if (error >= actError - .5 && error <= actError + .5) {
+                if ((error >= actError - .5 && error <= actError + .5)) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
@@ -211,11 +211,19 @@ public class Bot {
     }
 
     public static void gyroTurn(double speed, double angle, LinearOpMode opmode) {
-
         // keep looping while we are still active, and not on heading.
-        while (opmode.opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF, opmode)) {
-            // Update telemetry & Allow time for other processes to run.
-            opmode.telemetry.update();
+        double deltaAngle = angle - Gyro.getHeading();
+        if( angle > Gyro.getHeading() ) {
+            while (opmode.opModeIsActive() && !onHeading(speed, deltaAngle, P_TURN_COEFF, opmode)) {
+                // Update telemetry & Allow time for other processes to run.
+                opmode.telemetry.update();
+            }
+        }
+        else {
+            while (opmode.opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF, opmode)) {
+                // Update telemetry & Allow time for other processes to run.
+                opmode.telemetry.update();
+            }
         }
     }
 
@@ -249,7 +257,7 @@ public class Bot {
 
         // Send desired speeds to motors.
         tLeftDT.setPower(leftSpeed);
-        tRightDT.setPower(leftSpeed);
+        bLeftDT.setPower(leftSpeed);
         tRightDT.setPower(rightSpeed);
         bRightDT.setPower(rightSpeed);
 
