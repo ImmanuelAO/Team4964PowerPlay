@@ -87,13 +87,12 @@ public class ParkingAutoRight extends LinearOpMode {
 
     void ACTI(){
         Bot.Claw.setTargetPosition(var.claw_cone);
-        sleep(1);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
-        sleep(550);
+        sleep(5);
         Bot.strafeDrive(-64,.8, this);
         sleep(5);
-        Bot.driveStraight(123,.8, this);
+        Bot.driveStraight(123,.74123456789, this);
         sleep(5);
         Bot.strafeDrive(29.5f,.7,this);
         sleep(5);
@@ -109,38 +108,42 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(1);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
-        sleep(2025);
-        Bot.driveStraight(10, .3, this);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall + 400);
+        sleep(1250);
+        Bot.driveStraight(11, .3, this);
+        sleep(1);
+        Bot.Claw.setTargetPosition(var.claw_cone);
+        Bot.Lift.setTargetPosition(var.Lvl_Tall + 500);
+        Bot.Lift.setPower(.7);
+        Bot.Claw.setTargetPosition(var.claw_cone);
         sleep(25);
         //Bot.strafeDrive(3,.5,this);
         Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(575);
-        Bot.driveStraight(-13, .3, this);
-        sleep(1);
-        Bot.Lift.setTargetPosition(var.Lvl_Short + 510);
-        sleep(750);
+        sleep(55);
+        Bot.driveStraight(-10, .3, this);
+        Bot.Lift.setTargetPosition(-400);
+        sleep(55);
+
     }
 
     void ACTIII(){
-        Bot.gyroTurn(.5, 270, this);
+        Bot.gyroTurn(.5, 265, this);
         sleep(5);
-        Bot.driveStraight(72,.8,this);
+        Bot.driveStraight(80,.8,this);
         sleep(5);
-        Bot.driveStraight(26,.6,this);
+        Bot.gyroTurn(.5, 265, this);
+        Bot.driveStraight(15,.6,this);
         sleep(5);
         Bot.Claw.setTargetPosition(var.claw_cone);
-        Bot.Claw.setTargetPosition(var.claw_cone);
-        Bot.Claw.setPower(1);
-        sleep(575);
+        Bot.Claw.setPower(5);
+        sleep(55);
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         Bot.Lift.setPower(.65);
         sleep(50);
-        Bot.driveStraight(-72,.6,this);
+        Bot.driveStraight(-85,.6,this);
         sleep(5);
-        Bot.driveStraight(-26,.6,this);
+        Bot.driveStraight(-11,.6,this);
         sleep(5);
-        Bot.gyroTurn(.5, 182,this);
+        Bot.gyroTurn(.5, 180,this);
         sleep(5);
         Bot.driveStraight(5,.7,this);
     }
