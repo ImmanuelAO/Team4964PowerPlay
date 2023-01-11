@@ -93,7 +93,7 @@ public class ScoringAutoLeft extends LinearOpMode {
         sleep(2000);
         Bot.driveStraight(-20, .3, this);
         sleep(1);
-        Bot.Claw.setTargetPosition(var.claw_cone);
+        Bot.Claw.setTargetPosition(var.claw_cone + 10);
         sleep(750);
         Bot.Lift.setTargetPosition(var.Lvl_Ground);
         sleep(-var.Lvl_Tall);

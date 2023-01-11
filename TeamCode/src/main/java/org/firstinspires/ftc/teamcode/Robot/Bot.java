@@ -132,23 +132,37 @@ public class Bot {
             tRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
-            tLeftDT.setPower(speed);
-            tRightDT.setPower(speed);
-            bLeftDT.setPower(speed);
-            bRightDT.setPower(speed);
+            speed = Range.clip(Math.abs(speed), 0.0, speed + 0.15);
+            tLeftDT.setPower(speed - 0.1);
+            tRightDT.setPower(speed - 0.1);
+            bLeftDT.setPower(speed - 0.1);
+            bRightDT.setPower(speed - 0.1);
 
             while (opMode.opModeIsActive() && !done) {
 
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
 
-                if ( error >= actError - .5 && error <= actError + .5) {
-                    done = true;
+                if ( error >= actError - 1 && error <= actError + 1) {
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
                     bLeftDT.setPower(0);
                     bRightDT.setPower(0);
+                    done = true;
+                }
+
+                else if( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) > Math.abs(tLeftPower) / 2) {
+                    tLeftDT.setPower(speed + 0.025);
+                    tRightDT.setPower(speed + 0.025);
+                    bLeftDT.setPower(speed + 0.025);
+                    bRightDT.setPower(speed + 0.025);
+                }
+
+                else if( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) < Math.abs(tLeftPower) / 2) {
+                    tLeftDT.setPower(speed - 0.025);
+                    tRightDT.setPower(speed - 0.025);
+                    bLeftDT.setPower(speed - 0.025);
+                    bRightDT.setPower(speed - 0.025);
                 }
             }
 
@@ -157,7 +171,7 @@ public class Bot {
 
     }
 
-    public static void driveStraight (float distance, double speed, LinearOpMode opMode)
+    public static void driveStraight (float distance, double speed, double angle, LinearOpMode opMode)
     {
         bRightDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -185,7 +199,7 @@ public class Bot {
             tRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            speed = Range.clip(Math.abs(speed), 0.0, 1.0);
+            speed = Range.clip(Math.abs(speed), 0, 1.0);
             tLeftDT.setPower(speed);
             tRightDT.setPower(speed);
             bLeftDT.setPower(speed);
@@ -196,14 +210,31 @@ public class Bot {
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
 
-                if ((error >= actError - .5 && error <= actError + .5)) {
-                    done = true;
+                if ((error >= actError - 1 && error <= actError + 1) && onHeading(speed - 0.65, angle, P_TURN_COEFF, opMode)) {
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
                     bLeftDT.setPower(0);
                     bRightDT.setPower(0);
+                    done = true;
+                }
+
+                else if( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) > Math.abs(tLeftPower) / 2) {
+                    tLeftDT.setPower(speed + 0.025);
+                    tRightDT.setPower(speed + 0.025);
+                    bLeftDT.setPower(speed + 0.025);
+                    bRightDT.setPower(speed + 0.025);
+                }
+
+                else if ( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) < Math.abs(tLeftPower) / 2) {
+                    tLeftDT.setPower(speed - 0.025);
+                    tRightDT.setPower(speed - 0.025);
+                    bLeftDT.setPower(speed - 0.025);
+                    bRightDT.setPower(speed - 0.025);
                 }
             }
+
+
+
 
 
         }
