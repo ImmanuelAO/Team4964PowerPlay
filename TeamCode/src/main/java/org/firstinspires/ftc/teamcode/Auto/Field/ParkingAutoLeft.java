@@ -44,49 +44,49 @@ public class ParkingAutoLeft extends LinearOpMode {
     }
 
     void ACTI(){
-        Bot.Claw.setTargetPosition(var.claw_cone);
-        sleep(1);
-        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bot.Claw.setPower(1);
-        sleep(550);
-        Bot.strafeDrive(84,.5, this);
-        sleep(5);
-        Bot.driveStraight(123,.5, this);
-        sleep(5);
-        Bot.strafeDrive(-33,.3,this);
+//        Bot.Claw.setTargetPosition(var.claw_cone);
+//        sleep(1);
+//        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        Bot.Claw.setPower(1);
+//        sleep(550);
+//        Bot.strafeDrive(84,.5, this);
+//        sleep(5);
+//        Bot.driveStraight(123,.5, this);
+//        sleep(5);
+//        Bot.strafeDrive(-33,.3,this);
     }
 
     void ACTII(){
-        Bot.Lift.setTargetPosition(var.Lvl_Tall);
-        sleep(1);
-        Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bot.Lift.setPower(1);
-        sleep(-var.Lvl_Tall);
-        Bot.driveStraight(13, .3, this);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall + 500);
-        sleep(100);
-        //Bot.strafeDrive(3,.5,this);
-        Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(2000);
-        Bot.driveStraight(-20, .3, this);
-        sleep(1);
-        Bot.Claw.setTargetPosition(var.claw_cone);
-        sleep(1200);
-        Bot.Lift.setTargetPosition(var.Lvl_Ground);
-        //sleep(-var.Lvl_Tall);
-        Bot.Lift.setPower(0);
+//        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+//        sleep(1);
+//        Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        Bot.Lift.setPower(1);
+//        sleep(-var.Lvl_Tall);
+//        Bot.driveStraight(13, .3, this);
+//        Bot.Lift.setTargetPosition(var.Lvl_Tall + 500);
+//        sleep(100);
+//        //Bot.strafeDrive(3,.5,this);
+//        Bot.Claw.setTargetPosition(var.claw_zero);
+//        sleep(2000);
+//        Bot.driveStraight(-20, .3, this);
+//        sleep(1);
+//        Bot.Claw.setTargetPosition(var.claw_cone);
+//        sleep(1200);
+//        Bot.Lift.setTargetPosition(var.Lvl_Ground);
+//        //sleep(-var.Lvl_Tall);
+//        Bot.Lift.setPower(0);
     }
 
     void ACTIII(){
-        switch (pos) {
-            case POS1:
-                Bot.strafeDrive(-95,.7,this);
-                break;
-            case POS2:
-                Bot.strafeDrive(-30,.7,this);
-                break;
-            case POS3:
-                Bot.strafeDrive(35,.7,this);
-        }
+//        switch (pos) {
+//            case POS1:
+//                Bot.strafeDrive(-95,.7,this);
+//                break;
+//            case POS2:
+//                Bot.strafeDrive(-30,.7,this);
+//                break;
+//            case POS3:
+//                Bot.strafeDrive(35,.7,this);
+//        }
     }
 }

@@ -44,7 +44,6 @@ public class ParkingAutoRight extends LinearOpMode {
         //robot.strafeDrive(0,70, 0.7, this);
        // robot.strafeDrive(-39, 0, 0.7, this);
 
-        Bot.Gyro.calibrate();
 
         ACTI();
 
@@ -94,15 +93,17 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setPower(1);
         Bot.gyroTurn(.5,180, this);
         sleep(5);
-        Bot.strafeDrive(-64,.8, this);
+        Bot.strafeDrive(-30,1,this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
-        Bot.driveStraight(-10,.4,180, this);
+        Bot.strafeDrive(-36,.7,this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
-        Bot.driveStraight(130,1, 180, this);
+        Bot.gyroTurn(.5,180,this);
+        sleep(5);
+        Bot.driveStraight(123,1, 180, this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
@@ -112,9 +113,7 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setPower(.75);
         Bot.strafeDrive(30,.7,this);
         sleep(5);
-        Bot.gyroTurn(.5,180,this);
-        sleep(5);
-        Bot.strafeDrive(9.25f,1,this);
+        Bot.strafeDrive(12,1,this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
@@ -131,29 +130,31 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setPower(.5);
         Bot.driveStraight(14, .5, 180, this);
         sleep(5);
+        Bot.Lift.setPower(.25);
         Bot.Claw.setTargetPosition(var.claw_zero);
-        Bot.Claw.setPower(.75);
+        Bot.Claw.setPower(.9);
         Bot.gyroTurn(.5,180,this);
+        Bot.Lift.setTargetPosition(var.Lvl_Mid);
         sleep(5);
         Bot.Claw.setTargetPosition(var.claw_zero);
-        Bot.Claw.setPower(1);
-        Bot.Lift.setPower(.35);
-        Bot.Lift.setTargetPosition(var.Lvl_Mid);
+        Bot.Claw.setPower(.8);
+        Bot.Lift.setPower(1);
         Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(55);
+        sleep(600);
         Bot.gyroTurn(.5,180,this);
         Bot.Claw.setTargetPosition(var.claw_zero + 20);
         Bot.Claw.setPower(1);
-        sleep(25);
+        sleep(750);
         Bot.Lift.setPower(1);
         //Bot.strafeDrive(3,.5,this);
         Bot.Claw.setTargetPosition(var.claw_zero + 10);
         sleep(55);
+        Bot.gyroTurn(.5,180,this);
+        sleep(5);
         Bot.driveStraight(-14, .3, 180, this);
         Bot.Lift.setTargetPosition(-460);
         Bot.Claw.setTargetPosition(var.claw_cone + 14);
         Bot.Claw.setPower(1);
-        Bot.gyroTurn(.5,180,this);
         sleep(55);
     }
 
@@ -164,7 +165,7 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(5);
         Bot.strafeDrive(-7,.8,this);
         sleep(5);
-        Bot.driveStraight(80,.8, 270, this);
+        Bot.driveStraight(92,.8, 270, this);
         sleep(5);
         Bot.Claw.setTargetPosition(-10);
         Bot.Claw.setPower(0.75);
@@ -178,8 +179,11 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Short);
         sleep(275);
-        Bot.driveStraight(-100,1,270,this);
+        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+        Bot.Lift.setPower(.5);
+        Bot.driveStraight(-90,.8,270,this);
         sleep(5);
+        Bot.Lift.setPower(1);
         Bot.strafeDrive(-3,.7,this);
     }
 

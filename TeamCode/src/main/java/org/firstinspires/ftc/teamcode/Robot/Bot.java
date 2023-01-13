@@ -111,6 +111,7 @@ public class Bot {
         tLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bRightDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        opMode.telemetry.update();
         // if it breaks do this https://github.com/AnishJag/FTCFreightFrenzy/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Base/MainBase.java
         if(opMode.opModeIsActive()) {
             double error = distance / Math.abs(distance);
@@ -132,13 +133,14 @@ public class Bot {
             tRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            speed = Range.clip(Math.abs(speed), 0.0, speed + 0.15);
+            speed = Range.clip(Math.abs(speed), 0.1, speed + 0.15);
             tLeftDT.setPower(speed - 0.1);
             tRightDT.setPower(speed - 0.1);
             bLeftDT.setPower(speed - 0.1);
             bRightDT.setPower(speed - 0.1);
 
             while (opMode.opModeIsActive() && !done) {
+                speed = Range.clip(Math.abs(speed), 0.05, speed + 0.15);
 
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
@@ -164,6 +166,13 @@ public class Bot {
                     bLeftDT.setPower(speed - 0.025);
                     bRightDT.setPower(speed - 0.025);
                 }
+
+                else if ( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) < Math.abs(tLeftPower) / distance * conversion - 10) {
+                    tLeftDT.setPower(speed - 0.95);
+                    tRightDT.setPower(speed - 0.95);
+                    bLeftDT.setPower(speed - 0.95);
+                    bRightDT.setPower(speed - 0.85);
+                }
             }
 
 
@@ -177,6 +186,7 @@ public class Bot {
         tLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bRightDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         bLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        opMode.telemetry.update();
         // if it breaks do this https://github.com/AnishJag/FTCFreightFrenzy/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Base/MainBase.java
         if(opMode.opModeIsActive()) {
             double error = distance / Math.abs(distance);
@@ -199,13 +209,14 @@ public class Bot {
             tRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            speed = Range.clip(Math.abs(speed), 0, 1.0);
+            speed = Range.clip(Math.abs(speed), 0.1, speed + 0.15);
             tLeftDT.setPower(speed);
             tRightDT.setPower(speed);
             bLeftDT.setPower(speed);
             bRightDT.setPower(speed);
 
             while (opMode.opModeIsActive() && !done) {
+                speed = Range.clip(Math.abs(speed), 0.05, speed + 0.15);
 
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
@@ -230,6 +241,13 @@ public class Bot {
                     tRightDT.setPower(speed - 0.025);
                     bLeftDT.setPower(speed - 0.025);
                     bRightDT.setPower(speed - 0.025);
+                }
+
+                else if ( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) < Math.abs(tLeftPower) / distance * conversion - 10) {
+                    tLeftDT.setPower(speed - 0.95);
+                    tRightDT.setPower(speed - 0.95);
+                    bLeftDT.setPower(speed - 0.95);
+                    bRightDT.setPower(speed - 0.95);
                 }
             }
 
