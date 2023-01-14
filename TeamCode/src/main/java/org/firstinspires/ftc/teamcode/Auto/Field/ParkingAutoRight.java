@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Auto.Detection.ObjectDetector;
 import org.firstinspires.ftc.teamcode.Robot.Bot;
 import org.firstinspires.ftc.teamcode.Robot.Variables;
@@ -45,13 +46,7 @@ public class ParkingAutoRight extends LinearOpMode {
        // robot.strafeDrive(-39, 0, 0.7, this);
 
 
-        ACTI();
-
-        ACTII();
-
-        ACTIII();
-
-        ACTII();
+        REHEARSAL();
 
 
 //
@@ -87,6 +82,29 @@ public class ParkingAutoRight extends LinearOpMode {
     //    }
     }
 
+    void REHEARSAL(){
+        ACTI();
+
+
+        ACTII();
+
+        ACTIII();
+
+        ACTII();
+    }
+
+    void BROADWAY(){
+        ACTI();
+
+        ACTII();
+
+        ACTIII();
+
+        ACTII();
+
+        ACTV();
+    }
+
     void ACTI(){
         Bot.Claw.setTargetPosition(var.claw_cone);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -111,9 +129,19 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(1);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(.75);
-        Bot.strafeDrive(30,.7,this);
+        Bot.strafeDrive(20,.8,this);
         sleep(5);
-        Bot.strafeDrive(12,1,this);
+
+        int i = 0;
+        if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
+            while (Bot.distance.getDistance(DistanceUnit.CM) <= 40 || i > 50000){
+                telemetry.addLine("stopped for other actor");
+                i += 8;
+            }
+        }
+
+
+        Bot.SensorStrafeDrive(22,.5,30,this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
@@ -126,6 +154,7 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setPower(.25);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
+        correction();
         Bot.Claw.setTargetPosition(var.claw_zero);
         Bot.Claw.setPower(.5);
         Bot.driveStraight(14, .5, 180, this);
@@ -165,7 +194,8 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(5);
         Bot.strafeDrive(-7,.8,this);
         sleep(5);
-        Bot.driveStraight(92,.8, 270, this);
+        Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.sensorDriveStraight(92,.8, 25, this);
         sleep(5);
         Bot.Claw.setTargetPosition(-10);
         Bot.Claw.setPower(0.75);
@@ -173,7 +203,8 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setTargetPosition(var.claw_cone - 10);
         Bot.Claw.setPower(1);
         sleep(5);
-        Bot.driveStraight(12,.3,270, this);
+        Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.sensorDriveStraight(24,.3,.5, this);
         Bot.Claw.setTargetPosition(var.claw_cone - 17);
         Bot.Claw.setPower(5);
         sleep(275);
@@ -187,7 +218,16 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.strafeDrive(-3,.7,this);
     }
 
-    void ACTIV(){
+    void correction(){
+        Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.SensorStrafeDrive(-5,.5,30, this);
+        sleep(5);
+        Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.SensorStrafeDrive(5,.5,30, this);
+        sleep(5);
+    }
+
+    void ACTV(){
         Bot.gyroTurn(.5,180,this);
         switch (pos) {
             case POS1:
