@@ -110,7 +110,7 @@ public class ParkingAutoLeft extends LinearOpMode {
         Bot.Claw.setPower(1);
         Bot.gyroTurn(.5,180, this);
         sleep(5);
-        Bot.strafeDrive(30,1,this);
+        Bot.strafeDrive(40,1,this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
