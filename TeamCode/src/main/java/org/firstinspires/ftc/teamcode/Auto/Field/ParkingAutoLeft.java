@@ -148,41 +148,33 @@ public class ParkingAutoLeft extends LinearOpMode {
 
     void ACTII(){
         Bot.Lift.setPower(1);
-        Bot.Claw.setTargetPosition(var.claw_zero);
-        Bot.Claw.setPower(.25);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
         correction();
-        Bot.Claw.setTargetPosition(var.claw_zero);
-        Bot.Claw.setPower(.5);
         Bot.driveStraight(14, .5, 180, this);
         sleep(5);
         Bot.Lift.setPower(.25);
-        Bot.Claw.setTargetPosition(var.claw_zero);
         Bot.Claw.setPower(.9);
         Bot.gyroTurn(.5,180,this);
         Bot.Lift.setTargetPosition(var.Lvl_Mid);
         sleep(5);
-        Bot.Claw.setTargetPosition(var.claw_zero);
         Bot.Claw.setPower(.8);
         Bot.Lift.setPower(1);
-        Bot.Claw.setTargetPosition(var.claw_zero);
-        sleep(600);
         Bot.gyroTurn(.5,180,this);
-        Bot.Claw.setTargetPosition(var.claw_zero + 20);
-        Bot.Claw.setPower(1);
-        sleep(750);
+        Bot.Claw.setPower(.6);
         Bot.Lift.setPower(1);
         //Bot.strafeDrive(3,.5,this);
-        Bot.Claw.setTargetPosition(var.claw_zero + 10);
+        Bot.Claw.setTargetPosition(var.claw_zero);
         sleep(55);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
-        Bot.driveStraight(-14, .3, 180, this);
-        Bot.Lift.setTargetPosition(-460);
-        Bot.Claw.setTargetPosition(var.claw_cone + 14);
+        Bot.Claw.setTargetPosition(var.claw_zero);
+        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
         sleep(55);
+        Bot.driveStraight(-14, .3, 180, this);
+        Bot.Lift.setTargetPosition(-460);
+        sleep(5);
     }
 
     void ACTIII(){
@@ -195,21 +187,16 @@ public class ParkingAutoLeft extends LinearOpMode {
         Bot.distance.getDistance(DistanceUnit.CM);
         Bot.sensorDriveStraight(92,.8, 25, this);
         sleep(5);
-        Bot.Claw.setTargetPosition(-10);
-        Bot.Claw.setPower(0.75);
-        sleep(55);
-        Bot.Claw.setTargetPosition(var.claw_cone - 10);
-        Bot.Claw.setPower(1);
-        sleep(5);
+        Bot.distance.getDistance(DistanceUnit.CM);
         Bot.sensorDriveStraight(24,.3,1, this);
-        Bot.Claw.setTargetPosition(var.claw_cone - 17);
+        Bot.Claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bot.Claw.setPower(5);
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Short);
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         Bot.Lift.setPower(.5);
-        Bot.driveStraight(-90,.8,90,this);
+        Bot.sensorDriveStraight(-90,.8,90,this);
         sleep(5);
         Bot.Lift.setPower(1);
         Bot.strafeDrive(3,.7,this);
