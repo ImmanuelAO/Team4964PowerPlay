@@ -16,6 +16,7 @@ public class ParkingAutoLeft extends LinearOpMode {
     Bot robot = new Bot();
     Variables var = new Variables();
     ObjectDetector.POSITIONS pos;
+    boolean skip = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -133,14 +134,25 @@ public class ParkingAutoLeft extends LinearOpMode {
 
         int i = 0;
         if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
-            while (Bot.distance.getDistance(DistanceUnit.CM) <= 40 || i > 50000){
+            while (Bot.distance.getDistance(DistanceUnit.CM) <= 40){
                 telemetry.addLine("stopped for other actor");
                 i += 8;
+                if(i > 50000){
+                    skip = true;
+                }
             }
         }
 
-        Bot.SensorStrafeDrive(22,.5,30,this);
+        Bot.strafeDrive(10,.5,this);
         sleep(5);
+        if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
+            Bot.driveStraight(-10,.7,180,this);
+            while (Bot.distance.getDistance(DistanceUnit.CM) <= 50);
+            Bot.driveStraight(10,.7,180,this);
+            sleep(5);
+        }
+
+        Bot.SensorStrafeDrive(13,.5,30,this);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
 
@@ -185,10 +197,10 @@ public class ParkingAutoLeft extends LinearOpMode {
         Bot.strafeDrive(7,.8,this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.sensorDriveStraight(92,.8, 25, this);
+        Bot.driveStraight(92,.8, 90, this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.sensorDriveStraight(24,.3,1, this);
+        Bot.sensorDriveStraight((float) Bot.distance.getDistance(DistanceUnit.CM) - 1f,.3,1, this);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bot.Claw.setPower(5);
         sleep(275);

@@ -147,7 +147,7 @@ public class Bot {
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
                 double currentDistance = Bot.distance.getDistance(DistanceUnit.CM);
 
-                if ((error >= actError - .7 && error <= actError + .7) || currentDistance < sensorDistance) {
+                if ((error >= actError - 7 && error <= actError + 7) && currentDistance < sensorDistance) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
@@ -212,7 +212,7 @@ public class Bot {
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
                 double currentDistance = Bot.distance.getDistance(DistanceUnit.CM);
 
-                if ((error >= actError - .7 && error <= actError + .7) || currentDistance < range) {
+                if ((error >= actError - 7 && error <= actError + 7) && currentDistance < range) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);

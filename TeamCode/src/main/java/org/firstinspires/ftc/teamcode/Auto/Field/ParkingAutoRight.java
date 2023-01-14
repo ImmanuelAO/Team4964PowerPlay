@@ -151,9 +151,16 @@ public class ParkingAutoRight extends LinearOpMode {
             }
         }
 
-
-        Bot.SensorStrafeDrive(22,.5,30,this);
+        Bot.strafeDrive(-10,.5,this);
         sleep(5);
+        if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
+            Bot.driveStraight(-10,.7,180,this);
+            while (Bot.distance.getDistance(DistanceUnit.CM) <= 50);
+            Bot.driveStraight(10,.7,180,this);
+            sleep(5);
+        }
+
+        Bot.SensorStrafeDrive(-13,.5,30,this);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
 
@@ -194,24 +201,24 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(5);
         Bot.gyroTurn(.5, 270, this);
         sleep(5);
-        Bot.strafeDrive(-7,.8,this);
+        Bot.strafeDrive(7,.8,this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.sensorDriveStraight(92,.8, 25, this);
+        Bot.driveStraight(92,.8, 270, this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.sensorDriveStraight(24,.3,.5, this);
-        Bot.Claw.setTargetPosition(var.claw_cone - 17);
+        Bot.sensorDriveStraight((float) Bot.distance.getDistance(DistanceUnit.CM) - 1f,.3,1, this);
+        Bot.Claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bot.Claw.setPower(5);
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Short);
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         Bot.Lift.setPower(.5);
-        Bot.sensorDriveStraight(-90,.8,270,this);
+        Bot.driveStraight(-90,.8,270,this);
         sleep(5);
         Bot.Lift.setPower(1);
-        Bot.strafeDrive(-3,.7,this);
+        Bot.strafeDrive(3,.7,this);
     }
 
     void correction(){
