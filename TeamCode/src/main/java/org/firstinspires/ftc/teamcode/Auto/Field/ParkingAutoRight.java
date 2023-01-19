@@ -46,8 +46,13 @@ public class ParkingAutoRight extends LinearOpMode {
 
         if (ACTI()) {
             ACTII();
+            ACTIII();
         }
-        ACTIII();
+        //else {
+        //    ACTIV();
+        //    ACTV();
+        //}
+
 
 
 //
@@ -112,7 +117,7 @@ public class ParkingAutoRight extends LinearOpMode {
 //            telemetry.addLine("distance:" + Bot.distance.getDistance(DistanceUnit.CM));
 //            telemetry.update();
 //        }
-        Bot.strafeDrive(-12, 0.3, this);
+        //Bot.strafeDrive(-12, 0.3, this);
         return true;
     }
 
@@ -123,7 +128,7 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
         Bot.driveStraight(10, .3, this);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
+        //Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
         sleep(300);
         //Bot.strafeDrive(3,.5,this);
 
@@ -154,4 +159,27 @@ public class ParkingAutoRight extends LinearOpMode {
                 Bot.strafeDrive(95,.9,this);
         }
     }
+
+    //void ACTIV(){
+        //drive backwards
+        //activate distance sensor
+        //sensor strafe left(past junction)
+        //strafe right to the junction
+        //raise lift
+        //place cone on the junction
+        //park in the correct POS
+    //}
+
+//    void ACTV(){
+//        switch (pos) {
+//            case POS1:
+//                //Bot.strafeDrive(, .9, this);
+//                break;
+//            case POS2:
+//                //Bot.strafeDrive(, .9, this);
+//                break;
+//            case POS3:
+//                //Bot.strafeDrive(, .9, this);
+//        }
+//    }
 }

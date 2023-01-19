@@ -66,7 +66,7 @@ public class ParkingAutoLeft extends LinearOpMode {
             return false;
         }
         Bot.SensorStrafeDrive(-50, .2, this);
-        Bot.strafeDrive(-15, 0.3, this);
+        //Bot.strafeDrive(-15, 0.3, this);
         return true;
     }
     void ACTII(){
@@ -76,7 +76,7 @@ public class ParkingAutoLeft extends LinearOpMode {
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
         Bot.driveStraight(14, .3, this);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
+        //Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
         sleep(75);
         //Bot.strafeDrive(3,.5,this);
 
