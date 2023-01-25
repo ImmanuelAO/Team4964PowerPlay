@@ -118,6 +118,8 @@ public class Bot {
         if(opMode.opModeIsActive()) {
             double error = distance / Math.abs(distance);
 
+            int encoders = 0;
+
             boolean done = false;
 
             int tLeftPower = tLeftDT.getCurrentPosition() + (int) (conversion * -distance * 1.1 - (error * 1.5 * speed));
@@ -147,7 +149,17 @@ public class Bot {
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
                 double currentDistance = Bot.distance.getDistance(DistanceUnit.CM);
 
-                if ((error >= actError - 7 && error <= actError + 7) && currentDistance < sensorDistance) {
+                if ( currentDistance < sensorDistance) {
+                    encoders = Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition());
+                    while(currentDistance < sensorDistance);
+                    int i = (encoders - Math.abs(tLeftDT.getCurrentPosition())) / 2;
+                    tLeftPower = tLeftDT.getCurrentPosition() + (int) (conversion * -i * 1.1 - (error * 1.5 * speed));
+                    bLeftPower = bLeftDT.getCurrentPosition() + (int) (conversion * i * 1.1 - (error * 1.5 * speed));
+                    tRightPower = tRightDT.getCurrentPosition() + (int) (conversion * i * 1.1 + (error * 1.5 * speed));
+                    bRightPower = bRightDT.getCurrentPosition() + (int) (conversion * -i * 1.1 + (error * 1.5 * speed));
+                }
+
+                else if (error >= actError - 20 && error <= actError + 20) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);
@@ -212,7 +224,7 @@ public class Bot {
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
                 double currentDistance = Bot.distance.getDistance(DistanceUnit.CM);
 
-                if ((error >= actError - 7 && error <= actError + 7) && currentDistance < range) {
+                if ((error >= actError - 20 && error <= actError + 20) && currentDistance < range) {
                     done = true;
                     tLeftDT.setPower(0);
                     tRightDT.setPower(0);

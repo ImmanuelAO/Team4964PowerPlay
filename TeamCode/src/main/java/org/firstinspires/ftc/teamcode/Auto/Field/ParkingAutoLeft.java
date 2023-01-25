@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot.Bot;
 import org.firstinspires.ftc.teamcode.Robot.Variables;
 
 
-@Autonomous(name= "Left Parking Auto!!!!!")
+@Autonomous(name= "Left Parking Auto")
 public class ParkingAutoLeft extends LinearOpMode {
 
     Bot robot = new Bot();
@@ -121,7 +121,7 @@ public class ParkingAutoLeft extends LinearOpMode {
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);
-        Bot.driveStraight(123,1, 180, this);
+        Bot.driveStraight(117,1, 180, this);
         sleep(5);
         Bot.gyroTurn(.5,180,this);
         sleep(5);

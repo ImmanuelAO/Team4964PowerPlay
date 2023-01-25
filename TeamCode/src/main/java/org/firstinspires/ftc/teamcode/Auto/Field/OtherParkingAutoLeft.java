@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Robot.Bot;
 import org.firstinspires.ftc.teamcode.Robot.Variables;
 
 
-@Autonomous(name= "Other Left Parking Auto")
+@Autonomous(name= "Other Left Parking Auto!!!!!!")
 public class OtherParkingAutoLeft extends LinearOpMode {
 
     Bot robot = new Bot();
