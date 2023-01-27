@@ -108,7 +108,7 @@ public class Bot {
 
 
     }
-    public static void SensorStrafeDrive (float distance, double speed, double sensorDistance, LinearOpMode opMode)
+    public static void SensorStrafeDrive (float distance, double speed, double range, LinearOpMode opMode)
     {
         bRightDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -121,6 +121,10 @@ public class Bot {
             int encoders = 0;
 
             boolean done = false;
+
+            boolean targeting = false;
+
+            boolean sensing = true;
 
             int tLeftPower = tLeftDT.getCurrentPosition() + (int) (conversion * -distance * 1.1 - (error * 1.5 * speed));
             int bLeftPower = bLeftDT.getCurrentPosition() + (int) (conversion * distance * 1.1 - (error * 1.5 * speed));
@@ -143,20 +147,34 @@ public class Bot {
             bLeftDT.setPower(speed);
             bRightDT.setPower(speed);
 
-            while (opMode.opModeIsActive() && !done) {
+            while (opMode.opModeIsActive() && !done && !targeting && !sensing) {
 
                 double actError = error * (Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition())) + error *  (Math.abs(bLeftPower) - Math.abs(bLeftDT.getCurrentPosition())) + error *
                         (Math.abs(tRightPower) - Math.abs(tRightDT.getCurrentPosition())) + error *  (Math.abs(bRightPower) - Math.abs(bRightDT.getCurrentPosition()));
                 double currentDistance = Bot.distance.getDistance(DistanceUnit.CM);
 
-                if ( currentDistance < sensorDistance) {
+                if ( currentDistance < range && sensing) {
                     encoders = Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition());
-                    while(currentDistance < sensorDistance);
+                    while(currentDistance < range);
+                    targeting = true;
+                    sensing = false;
+                }
+
+                if(targeting){
                     int i = (encoders - Math.abs(tLeftDT.getCurrentPosition())) / 2;
                     tLeftPower = tLeftDT.getCurrentPosition() + (int) (conversion * -i * 1.1 - (error * 1.5 * speed));
                     bLeftPower = bLeftDT.getCurrentPosition() + (int) (conversion * i * 1.1 - (error * 1.5 * speed));
                     tRightPower = tRightDT.getCurrentPosition() + (int) (conversion * i * 1.1 + (error * 1.5 * speed));
                     bRightPower = bRightDT.getCurrentPosition() + (int) (conversion * -i * 1.1 + (error * 1.5 * speed));
+                    targeting = false;
+                }
+
+                if ( error >= actError - 1 && error <= actError + 1 && !targeting && !sensing) {
+                    tLeftDT.setPower(0);
+                    tRightDT.setPower(0);
+                    bLeftDT.setPower(0);
+                    bRightDT.setPower(0);
+                    done = true;
                 }
 
                 else if (error >= actError - 20 && error <= actError + 20) {
@@ -254,7 +272,7 @@ public class Bot {
 
 
     //driving using only Mecanum strafe
-    public static void strafeDrive (float distance, double speed, LinearOpMode opMode)
+    public static void strafeDrive (float distance, double speed, double angle, LinearOpMode opMode)
     {
         bRightDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         tLeftDT.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -282,6 +300,8 @@ public class Bot {
             tRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             bRightDT.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            while(!onHeading(speed, angle, P_TURN_COEFF, opMode));
+
             speed = Range.clip(Math.abs(speed), 0.1, speed + 0.15);
             tLeftDT.setPower(speed - 0.1);
             tRightDT.setPower(speed - 0.1);
@@ -299,7 +319,10 @@ public class Bot {
                     tRightDT.setPower(0);
                     bLeftDT.setPower(0);
                     bRightDT.setPower(0);
-                    done = true;
+
+                    if(!onHeading(speed, angle, P_TURN_COEFF, opMode)) {
+                        done = true;
+                    }
                 }
 
                 else if( Math.abs(tLeftPower) - Math.abs(tLeftDT.getCurrentPosition()) > Math.abs(tLeftPower) / 2) {
@@ -475,8 +498,8 @@ public class Bot {
 
         // calculate error in -179 to +180 range  (
         robotError = targetAngle - Gyro.getHeading();
-        while (robotError > 180) robotError -= 360;
-        while (robotError <= -180) robotError += 360;
+        while (robotError > 178) robotError -= 360;
+        while (robotError < -178) robotError += 360;
         return -robotError;
     }
 

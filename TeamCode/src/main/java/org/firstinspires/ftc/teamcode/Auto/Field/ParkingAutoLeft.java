@@ -17,7 +17,7 @@ public class ParkingAutoLeft extends LinearOpMode {
     Variables var = new Variables();
     ObjectDetector.POSITIONS pos;
     boolean skip = false;
-
+    public float dis = 0;
     @Override
     public void runOpMode() throws InterruptedException {
         ObjectDetector detector = new ObjectDetector(this, true,false);
@@ -86,140 +86,127 @@ public class ParkingAutoLeft extends LinearOpMode {
     void REHEARSAL(){
         ACTI();
 
-        ACTII();
+        if(skip){
+            ACTV();
+        }
 
-        ACTIII();
+        if(!skip) {
+            ACTII(90);
 
-        ACTII();
+            ACTIII(.7);
+
+            ACTII(270);
+        }
     }
 
     void BROADWAY(){
+
         ACTI();
 
-        ACTII();
+        if(!skip) {
+            ACTII(90);
 
-        ACTIII();
+            ACTIII(.9);
 
-        ACTII();
+            ACTII(270);
+        }
 
         ACTV();
     }
 
     void ACTI(){
-        Bot.Claw.setTargetPosition(var.claw_cone);
-        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bot.Claw.setPower(1);
         Bot.gyroTurn(.5,180, this);
         sleep(5);
-        Bot.strafeDrive(40,1,this);
+        Bot.Claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bot.Claw.setPower(-4);
+        Bot.driveStraight(10,1, 180, this);
         sleep(5);
-        Bot.gyroTurn(.5,180,this);
+        Bot.gyroTurn(.5,270,this);
         sleep(5);
-        Bot.strafeDrive(36,.7,this);
+        Bot.strafeDrive(-170, .7,270,this);
         sleep(5);
-        Bot.gyroTurn(.5,180,this);
-        sleep(5);
-        Bot.gyroTurn(.5,180,this);
-        sleep(5);
-        Bot.driveStraight(117,1, 180, this);
-        sleep(5);
-        Bot.gyroTurn(.5,180,this);
-        sleep(5);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+        Bot.Lift.setTargetPosition(var.Lvl_Mid);
         sleep(1);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(.75);
-        Bot.strafeDrive(20,.8,this);
-        sleep(5);
-
-        int i = 0;
-        if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
-            while (Bot.distance.getDistance(DistanceUnit.CM) <= 40){
-                telemetry.addLine("stopped for other actor");
-                i += 8;
-                if(i > 50000){
-                    skip = true;
-                }
-            }
-        }
-
-        Bot.strafeDrive(10,.5,this);
-        sleep(5);
-        if(Bot.distance.getDistance(DistanceUnit.CM) <= 40 ) {
-            Bot.driveStraight(-10,.7,180,this);
-            while (Bot.distance.getDistance(DistanceUnit.CM) <= 50);
-            Bot.driveStraight(10,.7,180,this);
-            sleep(5);
-        }
-
-        Bot.SensorStrafeDrive(13,.5,30,this);
-        Bot.gyroTurn(.5,180,this);
-        sleep(5);
-
+        Bot.SensorStrafeDrive(20,.5,15,this);
+        sleep(500);
+        dis = (float)Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+        sleep(250);
     }
 
-    void ACTII(){
-        Bot.Lift.setPower(1);
-        Bot.gyroTurn(.5,180,this);
+    void ACTII(int angle){
+        Bot.Lift.setPower(5);
+        Bot.gyroTurn(.5,angle,this);
         sleep(5);
-        correction();
-        Bot.driveStraight(14, .5, 180, this);
+        dis = (float)Bot.distance.getDistance(DistanceUnit.CM);
+        sleep(5);
+        Bot.driveStraight(dis - 1, .5, angle, this);
         sleep(5);
         Bot.Lift.setPower(.25);
         Bot.Claw.setPower(.9);
-        Bot.gyroTurn(.5,180,this);
+        Bot.gyroTurn(.5,angle,this);
         Bot.Lift.setTargetPosition(var.Lvl_Mid);
         sleep(5);
         Bot.Claw.setPower(.8);
         Bot.Lift.setPower(1);
-        Bot.gyroTurn(.5,180,this);
+        Bot.gyroTurn(.5,angle,this);
         Bot.Claw.setPower(.6);
         Bot.Lift.setPower(1);
         //Bot.strafeDrive(3,.5,this);
-        Bot.Claw.setTargetPosition(var.claw_zero);
         sleep(55);
-        Bot.gyroTurn(.5,180,this);
+        Bot.gyroTurn(.5,angle,this);
         sleep(5);
         Bot.Claw.setTargetPosition(var.claw_zero);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
         sleep(55);
-        Bot.driveStraight(-14, .3, 180, this);
+        Bot.driveStraight(-14, .3, angle, this);
         Bot.Lift.setTargetPosition(-460);
         sleep(5);
     }
 
-    void ACTIII(){
-        Bot.gyroTurn(.5,180,this);
+    void ACTIII(double urgency){
+        Bot.gyroTurn(.5,270,this);
         sleep(5);
         Bot.gyroTurn(.5, 90, this);
         sleep(5);
-        Bot.strafeDrive(7,.8,this);
+        Bot.strafeDrive(50,.8,90,this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
         Bot.driveStraight(92,.8, 90, this);
         sleep(5);
-        Bot.distance.getDistance(DistanceUnit.CM);
+        double i = Bot.distance.getDistance(DistanceUnit.CM);
+        correction(12);
+        while(Bot.distance.getDistance(DistanceUnit.CM) > i){
+            Bot.Lift.setTargetPosition((int) (Bot.Lift.getCurrentPosition() + urgency * 2));
+        }
+        Bot.Lift.setTargetPosition(Bot.Lift.getCurrentPosition() - 50);
         Bot.sensorDriveStraight((float) Bot.distance.getDistance(DistanceUnit.CM) - 1f,.3,1, this);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bot.Claw.setPower(5);
         sleep(275);
         Bot.Lift.setTargetPosition(var.Lvl_Short);
         sleep(275);
-        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+        Bot.Lift.setTargetPosition(var.Lvl_Mid);
         Bot.Lift.setPower(.5);
-        Bot.sensorDriveStraight(-90,.8,90,this);
+        Bot.driveStraight(-120,.8,90,this);
         sleep(5);
         Bot.Lift.setPower(1);
-        Bot.strafeDrive(3,.7,this);
+        Bot.strafeDrive(50,.7,90,this);
+        sleep(450);
+        dis = (float)Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+        sleep(250);
     }
 
-    void correction(){
+    void correction(int distance){
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.SensorStrafeDrive(-5,.5,30, this);
+        Bot.SensorStrafeDrive(-5,.5,distance, this);
         sleep(5);
         Bot.distance.getDistance(DistanceUnit.CM);
-        Bot.SensorStrafeDrive(5,.5,30, this);
+        Bot.SensorStrafeDrive(5,.5,-distance, this);
         sleep(5);
     }
 
@@ -227,13 +214,13 @@ public class ParkingAutoLeft extends LinearOpMode {
         Bot.gyroTurn(.5,180,this);
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(35,.9,this);
+                Bot.strafeDrive(35,.9,180,this);
                 break;
             case POS2:
-                Bot.strafeDrive(-30,.9,this);
+                Bot.strafeDrive(-30,.9,180,this);
                 break;
             case POS3:
-                Bot.strafeDrive(-95,.9,this);
+                Bot.strafeDrive(-95,.9,180,this);
         }
     }
 }
