@@ -126,32 +126,36 @@ public class ParkingAutoLeft extends LinearOpMode {
     }
 
     void ACTIV(){
-        //Bot.driveStraight(-200, .5, this);
-        //activate distance sensor maybe?
-        //Bot.strafeDrive(200, .5, this);
-        //Bot.strafeDrive(-200, .5, this);
-        //Bot.Lift.setTargetPosition(var.Lvl_Tall);
-        //sleep(1);
-        //move forward a little
+        Bot.driveStraight(-62, .5, this);
+//        Bot.strafeDrive(200, .5, this);
+//        Bot.SensorStrafeDrive(-200, .5, this);
+//        Bot.Lift.setTargetPosition(var.Lvl_Tall);
+//        sleep(1);
+//        move forward a little: Bot.driveStraight(?, .5, this);
 //        Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        Bot.Claw.setTargetPosition(var.claw_zero);
 //        sleep(1);
 //        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        Bot.Claw.setPower(1);
 //        sleep(200);
-        //lower lift and close claw
+//        //lower lift and close claw
     }
 
-    void ACTV(){ //change values before running or pushing code!!!!!!!!!!!!!
+    void ACTV(){
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(200, .9, this);
+                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
+                //Bot.driveStraight(forward one tile, .5, this);
                 break;
             case POS2:
-                Bot.strafeDrive(200, .9, this);
+                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
+                //Bot.driveStraight(forward one tile, .5, this);
+                //Bot.strafeDrive(left one tile, .5, this);
                 break;
             case POS3:
-                Bot.strafeDrive(200, .9, this);
+                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
+                //Bot.driveStraight(forward one tile, .5, this);
+                //Bot.strafeDrive(left two tiles, .5, this);
         }
     }
 }
