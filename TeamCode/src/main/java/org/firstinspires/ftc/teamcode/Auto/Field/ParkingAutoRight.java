@@ -89,6 +89,7 @@ public class ParkingAutoRight extends LinearOpMode {
         if(skip){
             ACTV();
         }
+<<<<<<< Updated upstream
 
         if(!skip) {
             ACTII(90);
@@ -112,6 +113,22 @@ public class ParkingAutoRight extends LinearOpMode {
         }
 
         ACTV();
+=======
+        //commands for when the opposing robot is still in the way
+        if (i == 0) {
+           return false;
+        }
+        //int i=0;
+//        while(i++<500) {
+//            telemetry.addLine("distance:" + Bot.distance.getDistance(DistanceUnit.CM));
+//            telemetry.update();
+//        }
+        else {
+            Bot.SensorStrafeDrive(50,.2,this);
+        }
+        //Bot.strafeDrive(-12, 0.3, this);
+        return true;
+>>>>>>> Stashed changes
     }
 
     void ACTI(){
@@ -203,6 +220,7 @@ public class ParkingAutoRight extends LinearOpMode {
         sleep(250);
     }
 
+<<<<<<< Updated upstream
     void correction(int distance){
         Bot.distance.getDistance(DistanceUnit.CM);
         Bot.SensorStrafeDrive(-5,.5,distance, this);
@@ -210,12 +228,20 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.distance.getDistance(DistanceUnit.CM);
         Bot.SensorStrafeDrive(5,.5,-distance, this);
         sleep(5);
+=======
+    void ACTIV(){
+        Bot.driveStraight(-57, .5, this);
+        Bot.SensorStrafeDrive(-60, .3, this);
+        Bot.SensorDriveStraight(1, .3, this);
+        ACTII();
+>>>>>>> Stashed changes
     }
 
     void ACTV(){
         Bot.gyroTurn(.5,180,this);
         switch (pos) {
             case POS1:
+<<<<<<< Updated upstream
                 Bot.strafeDrive(-35,.9,180,this);
                 break;
             case POS2:
@@ -223,6 +249,15 @@ public class ParkingAutoRight extends LinearOpMode {
                 break;
             case POS3:
                 Bot.strafeDrive(95,.9,180,this);
+=======
+                Bot.strafeDrive(40, .5, this);
+                break;
+            case POS2:
+                Bot.strafeDrive(100, .5, this);
+                break;
+            case POS3:
+                Bot.strafeDrive(160, .3, this);
+>>>>>>> Stashed changes
         }
     }
 }

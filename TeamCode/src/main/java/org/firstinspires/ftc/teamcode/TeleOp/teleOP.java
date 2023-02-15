@@ -179,6 +179,7 @@ public class teleOP extends OpMode {
 
 
         //lift code
+<<<<<<< Updated upstream
 
         if(!(Lift.getCurrentPosition() > 2800)){
             Lift.setPower(4 * gamepad2.left_stick_y);
@@ -191,6 +192,17 @@ public class teleOP extends OpMode {
         }
 
 
+=======
+        if(!(Lift.getCurrentPosition() > 2800)) {
+            Lift.setPower(4*gamepad2.left_stick_y);
+        }
+        else if(!(Lift.getCurrentPosition() > 2900)) {
+            Lift.setPower(1.5*gamepad2.left_stick_y);
+        }
+        else {
+        Lift.setPower(-1);
+        }
+>>>>>>> Stashed changes
 
         //wormhole in
         if(gamepad2.y){
@@ -216,6 +228,6 @@ public class teleOP extends OpMode {
         telemetry.addLine("Back right encoder counts: " + bRightDT.getCurrentPosition());
         telemetry.addLine("Lift encoder counts: " + Lift.getCurrentPosition());
         telemetry.addLine("Claw encoder counts: " + Claw.getCurrentPosition());
-
+        telemetry.update();
     }
 }

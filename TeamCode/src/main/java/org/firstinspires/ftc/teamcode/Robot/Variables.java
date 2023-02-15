@@ -3,7 +3,11 @@ package org.firstinspires.ftc.teamcode.Robot;
 public class Variables  {
     public int Lvl_Ground = -250,
             Lvl_Short  = -1500,
+<<<<<<< Updated upstream
             Lvl_Mid    = -2300,
+=======
+            Lvl_Mid    = -2250,
+>>>>>>> Stashed changes
             Lvl_Tall   = -2800;
     public boolean slo,
             btnlock = false;
