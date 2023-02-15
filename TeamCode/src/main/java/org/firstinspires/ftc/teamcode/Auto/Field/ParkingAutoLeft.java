@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Auto.Field;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Auto.Detection.ObjectDetector;
 import org.firstinspires.ftc.teamcode.Robot.Bot;
 import org.firstinspires.ftc.teamcode.Robot.Variables;
 
+@Disabled
 
 @Autonomous(name= "Left Parking Auto")
 public class ParkingAutoLeft extends LinearOpMode {
@@ -45,7 +47,6 @@ public class ParkingAutoLeft extends LinearOpMode {
         //robot.strafeDrive(-40, 0, 0.7, this);
         //robot.strafeDrive(0,70, 0.7, this);
         // robot.strafeDrive(-39, 0, 0.7, this);
-
 
         REHEARSAL();
 

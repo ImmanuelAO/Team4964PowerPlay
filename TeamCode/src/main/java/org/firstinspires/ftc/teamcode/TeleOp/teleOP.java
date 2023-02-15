@@ -179,7 +179,16 @@ public class teleOP extends OpMode {
 
 
         //lift code
-        Lift.setPower(4*gamepad2.left_stick_y);
+
+        if(!(Lift.getCurrentPosition() > 2800)){
+            Lift.setPower(4 * gamepad2.left_stick_y);
+        }
+        else if(!(Lift.getCurrentPosition() > 2900)){
+            Lift.setPower(1.5 * gamepad2.left_stick_y);
+        }
+        else {
+            Lift.setPower(-1);
+        }
 
 
 
