@@ -44,7 +44,7 @@ public class ParkingAutoRight extends LinearOpMode {
 
 
         if (ACTI()) {
-            ACTII();
+            ACTII(9);
             ACTIII();
         } else {
             ACTIV();
@@ -107,8 +107,6 @@ public class ParkingAutoRight extends LinearOpMode {
         }
         //commands for when the opposing robot is still in the way
         if (i == 0) {
-            Bot.driveStraight(-5, .5, this);
-            Bot.strafeDrive(37, .5, this);
             return false;
         }
         //commands for when there is no robot blocking the path
@@ -124,7 +122,7 @@ public class ParkingAutoRight extends LinearOpMode {
         return true;
     }
 
-    void ACTII() {
+    void ACTII(int distance) {
         //raise the lift to place cone
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         sleep(1);
@@ -132,11 +130,10 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
         //drive up the the junction
-        Bot.driveStraight(13, .3, this);
         //Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
         sleep(300);
         //Bot.strafeDrive(3,.5,this);
-
+        Bot.driveStraight(distance, 0.5, this);
         //release cone onto junction
         Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bot.Claw.setTargetPosition(var.claw_zero);
@@ -172,15 +169,19 @@ public class ParkingAutoRight extends LinearOpMode {
 
     void ACTIV() {
         Bot.driveStraight(-57, .5, this);
+        Bot.Lift.setTargetPosition(var.Lvl_Mid);
+        sleep(1);
+        Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bot.Lift.setPower(1);
+        Bot.distance.getDistance(DistanceUnit.CM);
         Bot.SensorStrafeDrive(-60, .3, this);
-        Bot.sensorDriveStraight(1, .3, 30, this);
-        ACTII();
+        sleep(5);
+        ACTII((int)Bot.distance.getDistance(DistanceUnit.CM));
     }
 
     void ACTV() {
         switch (pos) {
             case POS1:
-
                 Bot.strafeDrive(40, .5, this);
                 break;
             case POS2:
