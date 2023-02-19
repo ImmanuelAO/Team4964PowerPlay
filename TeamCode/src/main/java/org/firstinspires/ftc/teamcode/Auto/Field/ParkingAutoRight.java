@@ -173,7 +173,7 @@ public class ParkingAutoRight extends LinearOpMode {
     void ACTIV() {
         Bot.driveStraight(-57, .5, this);
         Bot.SensorStrafeDrive(-60, .3, this);
-        Bot.driveStraight(1, .3, this);
+        Bot.sensorDriveStraight(1, .3, 30, this);
         ACTII();
     }
 
