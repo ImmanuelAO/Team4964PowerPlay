@@ -19,7 +19,7 @@ public class ParkingAutoRight extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        ObjectDetector detector = new ObjectDetector(this, true,false);
+        ObjectDetector detector = new ObjectDetector(this, true, false);
 
         robot.init(hardwareMap, this);
 
@@ -38,55 +38,53 @@ public class ParkingAutoRight extends LinearOpMode {
         telemetry.addData("position ", detector.getDecision(this));
 
 
-
         //robot.strafeDrive(-40, 0, 0.7, this);
         //robot.strafeDrive(0,70, 0.7, this);
-       // robot.strafeDrive(-39, 0, 0.7, this);
+        // robot.strafeDrive(-39, 0, 0.7, this);
 
 
         if (ACTI()) {
             ACTII();
             ACTIII();
-        }
-        else {
+        } else {
             ACTIV();
             ACTV();
         }
 
 //
 //
-    //    // getting into position to drop cone
-    //    //robot.strafeDrive(0, 4, 0.7, this);
-    //    Bot.driveStraight(.7, 4,4,4,4,this);
+        //    // getting into position to drop cone
+        //    //robot.strafeDrive(0, 4, 0.7, this);
+        //    Bot.driveStraight(.7, 4,4,4,4,this);
 //
-    //    Bot.Claw.setTargetPosition(var.claw_open);
-    //    //robot.strafeDrive(0, -4, 0.7, this);
-    //    Bot.driveStraight(.7, -4,-4,-4,-4,this);
-    //    Bot.Lift.setTargetPosition(var.Lvl_Ground);
-    //    Bot.Claw.setTargetPosition(var.claw_zero);
-    //    //robot.strafeDrive(30, 0, 0.7, this);
-    //    //robot.strafeDrive(0, 65, 0.7, this);
-    //    Bot.strafeDrive(30,.7, this);
-    //    Bot.driveStraight(.7, 65,65,65,65,this);
+        //    Bot.Claw.setTargetPosition(var.claw_open);
+        //    //robot.strafeDrive(0, -4, 0.7, this);
+        //    Bot.driveStraight(.7, -4,-4,-4,-4,this);
+        //    Bot.Lift.setTargetPosition(var.Lvl_Ground);
+        //    Bot.Claw.setTargetPosition(var.claw_zero);
+        //    //robot.strafeDrive(30, 0, 0.7, this);
+        //    //robot.strafeDrive(0, 65, 0.7, this);
+        //    Bot.strafeDrive(30,.7, this);
+        //    Bot.driveStraight(.7, 65,65,65,65,this);
 //
 //
-    //    // make the decision
-    //    switch (position) {
-    //        case POS1:
-    //         break;
-    //         case POS2:
-    //             //robot.strafeDrive(55, 0, 0.7, this);
-    //             Bot.strafeDrive(55,.7, this);
+        //    // make the decision
+        //    switch (position) {
+        //        case POS1:
+        //         break;
+        //         case POS2:
+        //             //robot.strafeDrive(55, 0, 0.7, this);
+        //             Bot.strafeDrive(55,.7, this);
 //
-    //             break;
-    //             case POS3:
-    //                 //robot.strafeDrive(112, 0, 0.7, this);
-    //                 Bot.strafeDrive(112,.7, this);
+        //             break;
+        //             case POS3:
+        //                 //robot.strafeDrive(112, 0, 0.7, this);
+        //                 Bot.strafeDrive(112,.7, this);
 //
-    //    }
+        //    }
     }
 
-    boolean ACTI(){
+    boolean ACTI() {
         //close claw to hold cone
         Bot.Claw.setTargetPosition(var.claw_cone);
         sleep(1);
@@ -94,10 +92,10 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Claw.setPower(-1);
         sleep(550);
         //strafe to the left
-        Bot.strafeDrive(-55,.4, this);
+        Bot.strafeDrive(-55, .4, this);
         sleep(5);
         //drive forward
-        Bot.driveStraight(125,.6, this);
+        Bot.driveStraight(125, .6, this);
         sleep(5);
         //begin tracking distance with the sensor
         Bot.distance.getDistance(DistanceUnit.CM);
@@ -109,13 +107,13 @@ public class ParkingAutoRight extends LinearOpMode {
         }
         //commands for when the opposing robot is still in the way
         if (i == 0) {
-           Bot.driveStraight(-5, .5, this);
-           Bot.strafeDrive(37, .5, this);
-           return false;
+            Bot.driveStraight(-5, .5, this);
+            Bot.strafeDrive(37, .5, this);
+            return false;
         }
         //commands for when there is no robot blocking the path
         else {
-            Bot.SensorStrafeDrive(50,.2,this);
+            Bot.SensorStrafeDrive(50, .2, this);
         }
         //int i=0;
 //        while(i++<500) {
@@ -126,7 +124,7 @@ public class ParkingAutoRight extends LinearOpMode {
         return true;
     }
 
-    void ACTII(){
+    void ACTII() {
         //raise the lift to place cone
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         sleep(1);
@@ -158,50 +156,38 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setPower(0);
     }
 
-    void ACTIII(){
+    void ACTIII() {
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(-35,.9,this);
+                Bot.strafeDrive(-35, .9, this);
                 break;
             case POS2:
-                Bot.strafeDrive(30,.9,this);
+                Bot.strafeDrive(30, .9, this);
                 break;
             case POS3:
-                Bot.strafeDrive(95,.9,this);
+                Bot.strafeDrive(95, .9, this);
         }
     }
 
-    void ACTIV(){
-        Bot.driveStraight(-62, .5, this);
-//        Bot.strafeDrive(-200, .5, this);
-//        Bot.SensorStrafeDrive(200, .5, this);
-//        Bot.Lift.setTargetPosition(var.Lvl_Tall);
-//        sleep(1);
-//        move forward a little: Bot.driveStraight(?, .5, this);
-//        Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        Bot.Claw.setTargetPosition(var.claw_zero);
-//        sleep(1);
-//        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        Bot.Claw.setPower(1);
-//        sleep(200);
-//        //lower lift and close claw
+
+    void ACTIV() {
+        Bot.driveStraight(-57, .5, this);
+        Bot.SensorStrafeDrive(-60, .3, this);
+        Bot.driveStraight(1, .3, this);
+        ACTII();
     }
 
-    void ACTV(){
+    void ACTV() {
         switch (pos) {
             case POS1:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
+
+                Bot.strafeDrive(40, .5, this);
                 break;
             case POS2:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
-                //Bot.strafeDrive(right one tile, .5, this);
+                Bot.strafeDrive(100, .5, this);
                 break;
             case POS3:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
-                //Bot.strafeDrive(right two tiles, .5, this);
+                Bot.strafeDrive(160, .3, this);
         }
     }
 }
