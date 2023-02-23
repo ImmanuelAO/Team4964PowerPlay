@@ -38,7 +38,9 @@ public class ParkingAutoLeft extends LinearOpMode {
         telemetry.addData("position ", detector.getDecision(this));
 
         if (ACTI()) {
-            ACTII();
+            double l = Bot.distance.getDistance(DistanceUnit.CM);
+            sleep(5);
+            ACTII((int) l - 11);
             ACTIII();
         }
         else {
@@ -70,8 +72,6 @@ public class ParkingAutoLeft extends LinearOpMode {
         }
         //commands for when the opposing robot is still in the way
         if (i == 0) {
-            Bot.SensorStrafeDrive(-50, 0.2, this);
-            Bot.strafeDrive(-12, .3, this);
             return false;
         }
         //commands for when there is no robot blocking the path
@@ -79,33 +79,29 @@ public class ParkingAutoLeft extends LinearOpMode {
         //Bot.strafeDrive(-15, 0.3, this);
         return true;
     }
-    void ACTII(){
+    void ACTII(int distance){
         //raise lift to place cone
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
         sleep(1);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
+        sleep(300);
         //drive up to the junction
         Bot.driveStraight(17, .3, this);
-        //Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
-        sleep(75);
-
-        //Bot.strafeDrive(3,.5,this);
-
         //release cone onto the junction
         Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bot.Claw.setTargetPosition(var.claw_zero);
         sleep(1);
         Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Claw.setPower(1);
-        sleep(200);
+        sleep(1000);
         //back away from the junction
         Bot.driveStraight(-15, .3, this);
-        sleep(1);
+        sleep(200);
         //close the claw
         Bot.Claw.setTargetPosition(var.claw_cone);
-        sleep(1200);
+        sleep(500);
         //lower the lift
         Bot.Lift.setTargetPosition(var.Lvl_Ground);
         //sleep(-var.Lvl_Tall);
@@ -126,36 +122,29 @@ public class ParkingAutoLeft extends LinearOpMode {
     }
 
     void ACTIV(){
-        Bot.driveStraight(-62, .5, this);
-//        Bot.strafeDrive(200, .5, this);
-//        Bot.SensorStrafeDrive(-200, .5, this);
-//        Bot.Lift.setTargetPosition(var.Lvl_Tall);
-//        sleep(1);
-//        move forward a little: Bot.driveStraight(?, .5, this);
-//        Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        Bot.Claw.setTargetPosition(var.claw_zero);
-//        sleep(1);
-//        Bot.Claw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        Bot.Claw.setPower(1);
-//        sleep(200);
-//        //lower lift and close claw
+        Bot.driveStraight(-57, .5, this);
+        Bot.Lift.setTargetPosition(var.Lvl_Mid);
+        sleep(1);
+        Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bot.Lift.setPower(1);
+        Bot.distance.getDistance(DistanceUnit.CM);
+        Bot.SensorStrafeDrive(60, .2, this);
+        sleep(5);
+        double l = Bot.distance.getDistance(DistanceUnit.CM);
+        sleep(5);
+        ACTII((int)l - 10);
     }
 
     void ACTV(){
         switch (pos) {
             case POS1:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
+                Bot.strafeDrive(-160, .5, this);
                 break;
             case POS2:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
-                //Bot.strafeDrive(left one tile, .5, this);
+                Bot.strafeDrive(-100, .5, this);
                 break;
             case POS3:
-                //Bot.strafeDrive(reverse first strafe of ACTIV, .5, this);
-                //Bot.driveStraight(forward one tile, .5, this);
-                //Bot.strafeDrive(left two tiles, .5, this);
+                Bot.strafeDrive(-40, .3, this);
         }
     }
 }

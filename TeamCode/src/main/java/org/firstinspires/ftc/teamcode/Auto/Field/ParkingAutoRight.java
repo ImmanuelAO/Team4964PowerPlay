@@ -44,7 +44,9 @@ public class ParkingAutoRight extends LinearOpMode {
 
 
         if (ACTI()) {
-            ACTII(9);
+            double l = Bot.distance.getDistance(DistanceUnit.CM);
+            sleep(5);
+            ACTII((int) l - 11);
             ACTIII();
         } else {
             ACTIV();
@@ -129,8 +131,6 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         sleep(-var.Lvl_Tall);
-        //drive up the the junction
-        //Bot.Lift.setTargetPosition(var.Lvl_Tall + 600);
         sleep(300);
         //Bot.strafeDrive(3,.5,this);
         Bot.driveStraight(distance, 0.5, this);
@@ -153,16 +153,16 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.Lift.setPower(0);
     }
 
-    void ACTIII() {
+    void ACTIII(){
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(-35, .9, this);
+                Bot.strafeDrive(98,.5,this);
                 break;
             case POS2:
-                Bot.strafeDrive(30, .9, this);
+                Bot.strafeDrive(40,.5,this);
                 break;
             case POS3:
-                Bot.strafeDrive(95, .9, this);
+                Bot.strafeDrive(-35,.5,this);
         }
     }
 
@@ -176,7 +176,9 @@ public class ParkingAutoRight extends LinearOpMode {
         Bot.distance.getDistance(DistanceUnit.CM);
         Bot.SensorStrafeDrive(-60, .3, this);
         sleep(5);
-        ACTII((int)Bot.distance.getDistance(DistanceUnit.CM));
+        double l = Bot.distance.getDistance(DistanceUnit.CM);
+        sleep(5);
+        ACTII((int)l - 10);
     }
 
     void ACTV() {
