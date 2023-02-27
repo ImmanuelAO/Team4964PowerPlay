@@ -37,12 +37,6 @@ public class ParkingAutoRight extends LinearOpMode {
         pos = position;
         telemetry.addData("position ", detector.getDecision(this));
 
-
-        //robot.strafeDrive(-40, 0, 0.7, this);
-        //robot.strafeDrive(0,70, 0.7, this);
-        // robot.strafeDrive(-39, 0, 0.7, this);
-
-
         if (ACTI()) {
             double l = Bot.distance.getDistance(DistanceUnit.CM);
             sleep(5);
@@ -52,38 +46,6 @@ public class ParkingAutoRight extends LinearOpMode {
             ACTIV();
             ACTV();
         }
-
-//
-//
-        //    // getting into position to drop cone
-        //    //robot.strafeDrive(0, 4, 0.7, this);
-        //    Bot.driveStraight(.7, 4,4,4,4,this);
-//
-        //    Bot.Claw.setTargetPosition(var.claw_open);
-        //    //robot.strafeDrive(0, -4, 0.7, this);
-        //    Bot.driveStraight(.7, -4,-4,-4,-4,this);
-        //    Bot.Lift.setTargetPosition(var.Lvl_Ground);
-        //    Bot.Claw.setTargetPosition(var.claw_zero);
-        //    //robot.strafeDrive(30, 0, 0.7, this);
-        //    //robot.strafeDrive(0, 65, 0.7, this);
-        //    Bot.strafeDrive(30,.7, this);
-        //    Bot.driveStraight(.7, 65,65,65,65,this);
-//
-//
-        //    // make the decision
-        //    switch (position) {
-        //        case POS1:
-        //         break;
-        //         case POS2:
-        //             //robot.strafeDrive(55, 0, 0.7, this);
-        //             Bot.strafeDrive(55,.7, this);
-//
-        //             break;
-        //             case POS3:
-        //                 //robot.strafeDrive(112, 0, 0.7, this);
-        //                 Bot.strafeDrive(112,.7, this);
-//
-        //    }
     }
 
     boolean ACTI() {
@@ -156,21 +118,20 @@ public class ParkingAutoRight extends LinearOpMode {
     void ACTIII(){
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(98,.5,this);
+                Bot.strafeDrive(-35,.5,this);
                 break;
             case POS2:
-                Bot.strafeDrive(40,.5,this);
+                Bot.strafeDrive(30,.5,this);
                 break;
             case POS3:
-                Bot.strafeDrive(-35,.5,this);
+                Bot.strafeDrive(98,.5,this);
         }
     }
-
 
     void ACTIV() {
         Bot.driveStraight(-57, .5, this);
         Bot.Lift.setTargetPosition(var.Lvl_Mid);
-        sleep(1);
+        sleep(100);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         Bot.distance.getDistance(DistanceUnit.CM);
@@ -184,7 +145,7 @@ public class ParkingAutoRight extends LinearOpMode {
     void ACTV() {
         switch (pos) {
             case POS1:
-                Bot.strafeDrive(40, .5, this);
+                Bot.strafeDrive(37, .5, this);
                 break;
             case POS2:
                 Bot.strafeDrive(100, .5, this);

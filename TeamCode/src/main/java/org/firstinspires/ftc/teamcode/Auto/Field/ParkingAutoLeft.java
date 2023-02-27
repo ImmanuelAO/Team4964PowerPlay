@@ -75,10 +75,12 @@ public class ParkingAutoLeft extends LinearOpMode {
             return false;
         }
         //commands for when there is no robot blocking the path
-        Bot.SensorStrafeDrive(-50, .2, this);
-        //Bot.strafeDrive(-15, 0.3, this);
+        else {
+            Bot.SensorStrafeDrive(-50, .2, this);
+        }
         return true;
     }
+
     void ACTII(int distance){
         //raise lift to place cone
         Bot.Lift.setTargetPosition(var.Lvl_Tall);
@@ -88,7 +90,7 @@ public class ParkingAutoLeft extends LinearOpMode {
         sleep(-var.Lvl_Tall);
         sleep(300);
         //drive up to the junction
-        Bot.driveStraight(17, .3, this);
+        Bot.driveStraight(distance, .3, this);
         //release cone onto the junction
         Bot.Claw.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bot.Claw.setTargetPosition(var.claw_zero);
@@ -124,7 +126,7 @@ public class ParkingAutoLeft extends LinearOpMode {
     void ACTIV(){
         Bot.driveStraight(-57, .5, this);
         Bot.Lift.setTargetPosition(var.Lvl_Mid);
-        sleep(1);
+        sleep(100);
         Bot.Lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Bot.Lift.setPower(1);
         Bot.distance.getDistance(DistanceUnit.CM);
